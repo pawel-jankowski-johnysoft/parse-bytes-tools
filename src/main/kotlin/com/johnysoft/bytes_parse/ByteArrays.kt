@@ -15,8 +15,8 @@ private fun<T> ByteArray.extractValue(range: IntRange, call: (IntRange) -> T): T
 
 private infix fun ByteArray.signedDwordLe(range: IntRange) = this[range.last].toInt().and(0xff)
     .rotateLeft(24)
-    .or(this[range.last - 1].rotateLeft(16).toInt().and(0xff))
-    .or(this[range.first + 1].rotateLeft(8).toInt().and(0xff))
+    .or(this[range.last - 1].toInt().and(0xff).rotateLeft(16))
+    .or(this[range.first + 1].toInt().and(0xff).rotateLeft(8))
     .or(this[range.first].toInt().and(0xff))
 
 infix fun ByteArray.signedDwordLe(startIndex: Int): Int {
@@ -28,8 +28,8 @@ infix fun ByteArray.unsignedDwordLe(startIndex: Int) = signedDwordLe(startIndex)
 
 private infix fun ByteArray.signedDwordBe(range: IntRange) = this[range.first].toInt().and(0xff)
     .rotateLeft(24)
-    .or(this[range.first + 1].rotateLeft(16).toInt().and(0xff))
-    .or(this[range.last - 1].rotateLeft(8).toInt().and(0xff))
+    .or(this[range.first + 1].toInt().and(0xff).rotateLeft(16))
+    .or(this[range.last - 1].toInt().and(0xff).rotateLeft(8))
     .or(this[range.last].toInt().and(0xff))
 
 infix fun ByteArray.signedDwordBe(startIndex: Int): Int {
